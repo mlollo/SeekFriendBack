@@ -13,15 +13,46 @@ router.get('/', function(req, res, next) {
 	res.send('Users Route');
 });
 
-router.get('/get', function(req, res, next) {
+router.get('/getpseudo', function(req, res, next) {
 	Users.find(function(err, users){
 		if(err)
 			res.send('error!');
 		else{
-			var str = '';
-			for (var user in users) {
-				str += user;
-				str += '<br>';
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push({
+			        pseudo: users[i].pseudo,
+			    });
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
+router.get('/getall', function(req, res, next) {
+	Users.find(function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
+router.post('/getbyemailnpseudo', function(req, res, next) {
+	Users.find({$or:[ {'email' : req.body.email}, {'pseudo':req.body.pseudo}]},function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push({
+			        pseudo: users[i],
+			    });
 			}
 			res.send(users);
 		}
@@ -34,7 +65,8 @@ router.post('/add',function(req,res,next){
 		pseudo: req.body.pseudo,
 		password: req.body.password
 	});
-
+	// console.log(Object.keys(req.body)[0]);c
+	console.log(req.body);
 	user.save(function (err) {
 	  if (err) {
 	    console.log(err);
