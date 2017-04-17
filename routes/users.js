@@ -5,7 +5,8 @@ var router = express.Router();
 var Users = mongoose.model('Users', { 
 	email: String,
 	pseudo: String,
-	password: String
+	password: String,
+	isLog: Boolean
 });
 
 /* GET users listing. */
@@ -54,7 +55,36 @@ router.post('/getbyemailnpseudo', function(req, res, next) {
 			        pseudo: users[i],
 			    });
 			}
-			res.send(users);
+			res.send(jsonArr);
+		}
+	});
+});
+
+router.post('/getbyemail', function(req, res, next) {
+	Users.find({'email' : req.body.email},function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
+router.post('/login', function(req, res, next) {
+	Users.find({'email' : req.body.email},function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+				users[i].isLog = true;
+				jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
 		}
 	});
 });
@@ -63,7 +93,8 @@ router.post('/add',function(req,res,next){
 	var user = new Users({ 
 		email: req.body.email,
 		pseudo: req.body.pseudo,
-		password: req.body.password
+		password: req.body.password,
+		isLog: false
 	});
 	// console.log(Object.keys(req.body)[0]);c
 	console.log(req.body);
@@ -74,7 +105,12 @@ router.post('/add',function(req,res,next){
 	    console.log('Saved!');
 	  }
 	});
-	res.send('user '+user+' saved!');
+	console.log('user '+user+' saved!');
+	var jsonArr = [];
+	for (var i in users) {
+		jsonArr.push(users[i]);
+	}
+	res.send(jsonArr);
 });
 
 router.get('/reset',function(req,res,next){
