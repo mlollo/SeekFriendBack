@@ -89,6 +89,21 @@ router.post('/login', function(req, res, next) {
 	});
 });
 
+router.post('/logout', function(req, res, next) {
+	Users.find({'email' : req.body.email},function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+				users[i].isLog = false;
+				jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
 router.post('/add',function(req,res,next){
 	var user = new Users({ 
 		email: req.body.email,
