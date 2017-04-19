@@ -51,9 +51,7 @@ router.post('/getbyemailnpseudo', function(req, res, next) {
 		else{
 			var jsonArr = [];
 			for (var i in users) {
-			    jsonArr.push({
-			        pseudo: users[i],
-			    });
+			    jsonArr.push(users[i]);
 			}
 			res.send(jsonArr);
 		}
