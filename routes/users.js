@@ -57,7 +57,7 @@ router.post('/getbyemailnpseudo', function(req, res, next) {
 		}
 	});
 });
-
+	
 router.post('/getbyemail', function(req, res, next) {
 	Users.find({'email' : req.body.email},function(err, users){
 		if(err)
@@ -110,7 +110,7 @@ router.post('/add',function(req,res,next){
 		isLog: false
 	});
 	// console.log(Object.keys(req.body)[0]);c
-	console.log(req.body);
+	// console.log(req.body);
 	user.save(function (err) {
 	  if (err) {
 	    console.log(err);
@@ -120,9 +120,7 @@ router.post('/add',function(req,res,next){
 	});
 	console.log('user '+user+' saved!');
 	var jsonArr = [];
-	for (var i in users) {
-		jsonArr.push(users[i]);
-	}
+	jsonArr.push(user);
 	res.send(jsonArr);
 });
 
