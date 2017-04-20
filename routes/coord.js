@@ -14,8 +14,22 @@ router.get('/', function(req, res, next) {
 	res.send('Coord Route');
 });
 
+router.get('/getallcoord', function(req, res, next) {
+	// console.log(req.body.user_id);
+	Coords.find(function(err, coords){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in coords) {
+			    jsonArr.push(coords[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
 router.post('/getall', function(req, res, next) {
-	console.log(req.body.user_id);
 	Coords.find({'user_id' : req.body.user_id},function(err, coords){
 		if(err)
 			res.send('error!');
@@ -27,6 +41,7 @@ router.post('/getall', function(req, res, next) {
 			res.send(jsonArr);
 		}
 	});
+	console.log(req.body.user_id);
 });
 
 router.post('/add',function(req,res,next){
