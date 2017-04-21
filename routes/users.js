@@ -14,16 +14,15 @@ router.get('/', function(req, res, next) {
 	res.send('Users Route');
 });
 
-router.get('/getpseudo', function(req, res, next) {
-	Users.find(function(err, users){
+router.post('/getbypseudo', function(req, res, next) {
+	var regexp = new RegExp("^"+ req.body.pseudo);
+	Users.find({'pseudo': regexp},function(err, users){
 		if(err)
 			res.send('error!');
 		else{
 			var jsonArr = [];
 			for (var i in users) {
-			    jsonArr.push({
-			        pseudo: users[i].pseudo,
-			    });
+			    jsonArr.push(users[i]);
 			}
 			res.send(jsonArr);
 		}
@@ -132,7 +131,7 @@ router.get('/reset',function(req,res,next){
 	  	res.send('remove all success!');
 	});
 });
-router.get('/rm',function(req,res,next){
+router.post('/rm',function(req,res,next){
 	if(req.body.email != undefined){
 		Users.remove({email: req.body.email},function (err,users) {
 		  if (err) 
@@ -141,7 +140,7 @@ router.get('/rm',function(req,res,next){
 		  	res.send('remove '+ users +' success!');
 		});
 	}else
-		res.send('Please add an email get parameter!')
+		res.send('Please add an email post parameter!')
 });
 
 module.exports = router;

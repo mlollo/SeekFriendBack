@@ -44,6 +44,22 @@ router.post('/getall', function(req, res, next) {
 	console.log(req.body.user_id);
 });
 
+router.post('/getbydate', function(req, res, next) {
+	var regexp = new RegExp("^"+ req.body.date);
+	Coords.find({'user_id' : req.body.user_id, 'date': regexp},function(err, coords){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in coords) {
+			    jsonArr.push(coords[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+	console.log(req.body.user_id);
+});
+
 router.post('/add',function(req,res,next){
 	var coord = new Coords({ 
 		user_id: req.body.user_id,
@@ -64,6 +80,17 @@ router.post('/add',function(req,res,next){
 	var jsonArr = [];
 	jsonArr.push(coord);
 	res.send(jsonArr);
+});
+router.post('/rm',function(req,res,next){
+	if(req.body.id != undefined){
+		Coords.remove({_id: req.body.id},function (err,coord) {
+		  if (err) 
+		  	res.send('rm error');
+		  else
+		  	res.send('remove '+ coord +' success!');
+		});
+	}else
+		res.send('Please add an id post parameter!')
 });
 
 module.exports = router;
