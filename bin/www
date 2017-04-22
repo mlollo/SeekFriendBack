@@ -89,5 +89,5 @@ function onListening() {
   debug('Listening on ' + bind);
   var keys = [];
   for(var k in addr) keys.push(k);
-  console.log('serveur addr ' + keys); 
+  console.log('serveur addr :' + addr.address); 
 }
