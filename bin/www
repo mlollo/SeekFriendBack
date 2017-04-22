@@ -73,7 +73,6 @@ function onError(error) {
       process.exit(1);
       break;
     default:
-      console.error(bind + ' unknown error : ' + error.code)
       throw error;
   }
 }
@@ -88,5 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('serveur addr :' + addr.address); 
+  debug('serveur addr :' + bind); 
 }
