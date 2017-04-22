@@ -87,5 +87,7 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('serveur addr ' + addr); 
+  var keys = [];
+  for(var k in addr) keys.push(k);
+  console.log('serveur addr ' + keys); 
 }
