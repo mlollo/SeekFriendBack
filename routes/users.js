@@ -72,29 +72,21 @@ router.post('/getbyemail', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': true },function(err, users){
+	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': true },function(err, user){
 		if(err)
 			res.send('error!');
 		else{
-			var jsonArr = [];
-			for (var i in users) {
-				jsonArr.push(users[i]);
-			}
-			res.send(jsonArr);
+			res.send(user);
 		}
 	});
 });
 
 router.post('/logout', function(req, res, next) {
-	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': false },function(err, users){
+	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': false },function(err, user){
 		if(err)
 			res.send('error!');
 		else{
-			var jsonArr = [];
-			for (var i in users) {
-				jsonArr.push(users[i]);
-			}
-			res.send(jsonArr);
+			res.send(user);
 		}
 	});
 });
