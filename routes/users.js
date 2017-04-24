@@ -79,6 +79,7 @@ router.post('/login', function(req, res, next) {
 			var jsonArr = [];
 			for (var i in users) {
 				users[i].isLog = true;
+				console.log(users[i]);
 				jsonArr.push(users[i]);
 			}
 			res.send(jsonArr);
