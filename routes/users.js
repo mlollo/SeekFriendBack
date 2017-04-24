@@ -72,14 +72,12 @@ router.post('/getbyemail', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-	Users.find({'email' : req.body.email},function(err, users){
+	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': true },function(err, users){
 		if(err)
 			res.send('error!');
 		else{
 			var jsonArr = [];
 			for (var i in users) {
-				users[i].isLog = true;
-				console.log(users[i]);
 				jsonArr.push(users[i]);
 			}
 			res.send(jsonArr);
@@ -88,13 +86,12 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/logout', function(req, res, next) {
-	Users.find({'email' : req.body.email},function(err, users){
+	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': false },function(err, users){
 		if(err)
 			res.send('error!');
 		else{
 			var jsonArr = [];
 			for (var i in users) {
-				users[i].isLog = false;
 				jsonArr.push(users[i]);
 			}
 			res.send(jsonArr);
