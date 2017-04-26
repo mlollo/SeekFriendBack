@@ -12,6 +12,20 @@ router.get('/', function(req, res, next) {
 	res.send('Friends Route');
 });
 
+router.get('/getall', function(req, res, next) {
+	Friends.find(function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
 router.post('/addfriend',function(req,res,next){
 	var friendship = new Friends({ 
 		friends1: req.body.friends1,
