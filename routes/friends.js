@@ -67,7 +67,7 @@ router.post('/isfriend',function(req,res,next){
 });
 
 router.post('/removeFriend',function(req,res,next){
-	Friends.findOneAndRemove({
+	Friends.findAndRemove({
 		$or:[
 			{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
 			{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
