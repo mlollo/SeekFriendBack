@@ -71,6 +71,20 @@ router.post('/getbyemail', function(req, res, next) {
 	});
 });
 
+router.post('/getbyid', function(req, res, next) {
+	Users.find({'_id' : req.body.user_id},function(err, users){
+		if(err)
+			res.send('error!');
+		else{
+			var jsonArr = [];
+			for (var i in users) {
+			    jsonArr.push(users[i]);
+			}
+			res.send(jsonArr);
+		}
+	});
+});
+
 router.post('/login', function(req, res, next) {
 	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': true },function(err, user){
 		if(err)
