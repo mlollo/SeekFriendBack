@@ -37,13 +37,15 @@ router.post('/isfriend',function(req,res,next){
 			{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
 			]
 		},function(err, friends){
-		console.log(friends);
+		// console.log(friends);
+		var json = {isfriend: false};
 		if(err)
-			res.send({isfriend: false});
+			res.send(json);
 		else if(friends.length){
-			res.send({isfriend: true});
+			json.isfriend = true;
+			res.send(json);
 		}else{
-			res.send({isfriend: false});
+			res.send(json);
 		}
 	});
 });
