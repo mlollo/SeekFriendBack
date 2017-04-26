@@ -41,7 +41,7 @@ router.post('/getall', function(req, res, next) {
 			res.send(jsonArr);
 		}
 	});
-	console.log(req.body.user_id);
+	// console.log(req.body.user_id);
 });
 
 router.post('/getbydate', function(req, res, next) {
@@ -57,7 +57,7 @@ router.post('/getbydate', function(req, res, next) {
 			res.send(jsonArr);
 		}
 	});
-	console.log(req.body.user_id);
+	// console.log(req.body.user_id);
 });
 
 router.post('/add',function(req,res,next){

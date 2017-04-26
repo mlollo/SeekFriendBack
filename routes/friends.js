@@ -43,8 +43,10 @@ router.post('/isfriend',function(req,res,next){
 			res.send(json);
 		else if(friends.length){
 			json.isfriend = true;
+			console.log(json);
 			res.send(json);
 		}else{
+			console.log(json);
 			res.send(json);
 		}
 	});
