@@ -66,16 +66,18 @@ router.post('/isfriend',function(req,res,next){
 	});
 });
 
-router.post('/rm',function(req,res,next){
-	if(req.body.id != undefined){
-		Friends.remove({_id: req.body.id},function (err,friendship) {
+router.post('/removeFriend',function(req,res,next){
+	Friends.findOneAndRemove({
+		$or:[
+			{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
+			{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
+			]
+		},function (err,friendship) {
 		  if (err) 
 		  	res.send('rm error');
 		  else
 		  	res.send('remove '+ friendship +' success!');
 		});
-	}else
-		res.send('Please add an id post parameter!')
 });
 
 router.get('/reset',function(req,res,next){
