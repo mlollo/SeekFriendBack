@@ -52,4 +52,24 @@ router.post('/isfriend',function(req,res,next){
 	});
 });
 
+router.post('/rm',function(req,res,next){
+	if(req.body.id != undefined){
+		Friends.remove({_id: req.body.id},function (err,friendship) {
+		  if (err) 
+		  	res.send('rm error');
+		  else
+		  	res.send('remove '+ friendship +' success!');
+		});
+	}else
+		res.send('Please add an id post parameter!')
+});
+
+router.get('/reset',function(req,res,next){
+	Friends.remove(function (err) {
+	  if (err) 
+	  	res.send('reset error');
+	  else
+	  	res.send('remove all success!');
+	});
+});
 module.exports = router;
