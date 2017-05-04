@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressJWT = require('express-jwt');
 var mongoose = require('./node_modules/mongoose');
 //Middleware: Allows cross-domain requests (CORS)
 var allowCrossDomain = function(req, res, next) {
@@ -31,6 +32,8 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressJWT({secret: './§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§'})
+   .unless({path: ['/users/login','/users/getall','/users/add','/users/reset','/coords/add']}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(allowCrossDomain);
