@@ -5,7 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var expressJWT = require('express-jwt');
+var unless = require('express-unless');
 var mongoose = require('./node_modules/mongoose');
 //Middleware: Allows cross-domain requests (CORS)
 var allowCrossDomain = function(req, res, next) {
@@ -17,9 +17,7 @@ var allowCrossDomain = function(req, res, next) {
 }
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var coord = require('./routes/coord');
-var friends = require('./routes/friends');
+var routes = require('./routes/routes');
 
 var app = express();
 
@@ -32,16 +30,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressJWT({secret: './§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§'})
-   .unless({path: ['/users/login','/users/getall','/users/add','/users/reset','/coords/add']}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(allowCrossDomain);
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/coords', coord);
-app.use('/friends', friends);
+app.use('/users', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
