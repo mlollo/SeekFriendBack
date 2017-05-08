@@ -26,9 +26,6 @@ var Friends = mongoose.model('Friends', {
 });
 
 /* GET users listing. */
-router.get('/users', function(req, res, next) {
-	res.status(200).send('Users Route');
-});
 
 router.get('/users/getall', function(req, res, next) {
 	Users.find(function(err, users){
@@ -408,7 +405,7 @@ router.put('/users/pw', function(req, res, next) {
 });
 
 
-router.delete('/users',function(req,res,next){
+router.post('/users',function(req,res,next){
 	Users.remove(function (err) {
 	  if(err) res.status(500).json(err);
 	  res.status(200).send('Remove all success !');
@@ -416,7 +413,7 @@ router.delete('/users',function(req,res,next){
 });
 
 
-router.delete('/users/rm',function(req,res,next){
+router.post('/users/rm',function(req,res,next){
 	if(!req.body.email){
 		res.status(400).send("email is required");
 		return;
@@ -428,7 +425,7 @@ router.delete('/users/rm',function(req,res,next){
 	});
 });
 
-router.delete('/users/removeFriend',function(req,res,next){
+router.post('/users/removeFriend',function(req,res,next){
 	if(!req.body.friends1){
 		res.status(400).send("password is required");
 		return;
@@ -448,14 +445,14 @@ router.delete('/users/removeFriend',function(req,res,next){
 		});
 });
 
-router.delete('/coords',function(req,res,next){
+router.post('/coords',function(req,res,next){
 	Coords.remove(function (err) {
 	  if(err) res.status(500).json(err);
 	  res.status(200).send('Remove all success !');
 	});
 });
 
-router.delete('/coords/rm',function(req,res,next){
+router.post('/coords/rm',function(req,res,next){
 	if(!req.body.id){
 		res.status(400).send("id is required");
 		return;
@@ -466,14 +463,14 @@ router.delete('/coords/rm',function(req,res,next){
 	});
 });
 
-router.delete('/friends',function(req,res,next){
+router.post('/friends',function(req,res,next){
 	Friends.remove(function (err) {
 		if(err) res.status(500).json(err);
 	  	res.status(200).send('remove all success!');
 	});
 });
 
-router.delete('/friends/rm',function(req,res,next){
+router.post('/friends/rm',function(req,res,next){
 	if(!req.body.id){
 		res.status(400).send("id is required");
 		return;

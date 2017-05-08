@@ -1,0 +1,231 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Sample Application Flow OAuth2 Project
+  description: >-
+    This is an example of using OAuth2 Application Flow in a specification to
+    describe security to your API.
+basePath: /
+host: mlollo.rmorpheus.enseirb.fr
+schemes:
+  - http
+paths:
+  /users/getall:
+    get:
+      summary: Token not required
+      description: Get all users
+      produces:
+        - application/json
+      tags:
+        - Basic Operation
+      responses:
+        200:
+          description: json list of users
+          schema:
+            $ref: '#/definitions/Users'
+        500:
+
+  /users/add:
+    post:
+      summary: Token not required
+      description: Get all users
+      tags:
+        - Basic Operation
+      parameters:
+        - name: Add
+          in: body
+          description: user email
+          required: true
+          schema:
+            $ref: '#/definitions/Add'
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Error
+          schema: 
+            type: string
+            example: "Error"
+
+  /users/login:
+    post:
+      summary: Login with email and pw
+      parameters:
+        - name: Login
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: OK
+  /users/getcoords:
+    post:
+      summary: Get the coords of a user
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: Coords
+          in: body
+          description: lol
+          required: false
+          schema:
+            $ref: '#/definitions/Coords'
+  /users/getbypseudo:
+    post:
+      summary: get user by pseudo
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: pseudo
+          in: body
+          required: true
+          schema:
+            type: string
+  /users/getbyemailandpseudo:
+    post:
+      summary: Lol
+      description: login d'un user
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: ByMailPseudo
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ByMailPseudo'
+  /users/getbyemail:
+    post:
+      summary: Lol
+      description: login d'un user
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: email
+          in: body
+          required: true
+          schema:
+            type: string
+  /users/getbyid:
+    post:
+      summary: Lol
+      description: login d'un user
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: user_id
+          in: body
+          required: true
+          schema:
+            type: string
+  /users/logout:
+    post:
+      summary: Logout a user
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: email
+          in: body
+          required: true
+          schema:
+            type: string
+  /users/reset:
+    delete:
+      summary: Lol
+      description: delete all the user
+      responses:
+        '200':
+          description: OK
+  /users/rm:
+    delete:
+      summary: delete a user
+      description: salt
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - name: Remove
+          in: body
+          description: add user
+          required: true
+          schema:
+            $ref: '#/definitions/Remove'
+definitions:
+ Add:
+    description: add object
+    properties:
+      pseudo:
+        type: string
+        description: user object pseudo
+      email:
+        type: string
+        description: user object email
+      password:
+        type: string
+        description: user object password
+    required:
+      - pseudo
+      - email
+      - password
+  Login:
+    description: login object
+    properties:
+      email:
+        type: string
+        description: user object name
+      password:
+        type: string
+        description: user object password
+    required:
+      - email
+      - password
+  Coords:
+    description: Coords of a user
+    properties:
+      islog:
+        type: boolean
+        description: user object name
+      email:
+        type: string
+        description: user object email
+      user_id:
+        type: string
+        description: user ID
+    required:
+      - islog
+      - email
+      - user_id
+  ByMailPseudo:
+    description: find a user by mail and pseudo
+    properties:
+      email:
+        type: string
+        description: user object mail
+      pseudo:
+        type: string
+        description: user object pseudo
+    required:
+      - email
+      - pseudo
+  Remove:
+    description: add object
+    properties:
+      pseudo:
+        type: string
+        description: user object pseudo
+      email:
+        type: string
+        description: user object email
+      password:
+        type: string
+        description: user object password
+    required:
+      - pseudo
+      - email
+      - password
