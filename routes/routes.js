@@ -31,9 +31,6 @@ router.get('/users/getall', function(req, res, next) {
 	Users.find(function(err, users){
 		if(err) res.status(500).json(err);
 		var jsonArr = [];
-		// for (var i in users) {
-		//     jsonArr.push({email:users[i].email,pseudo:users[i].pseudo,isLog:users[i].isLog});
-		// }
 		users.forEach(function(value,key){
 			console.log(value);
 		    jsonArr.push({email:value.email,pseudo:value.pseudo,isLog:value.isLog,token: value.token});
@@ -405,7 +402,7 @@ router.put('/users/pw', function(req, res, next) {
 });
 
 
-router.post('/users',function(req,res,next){
+router.post('/users/reset',function(req,res,next){
 	Users.remove(function (err) {
 	  if(err) res.status(500).json(err);
 	  res.status(200).send('Remove all success !');
@@ -445,7 +442,7 @@ router.post('/users/removeFriend',function(req,res,next){
 		});
 });
 
-router.post('/coords',function(req,res,next){
+router.post('/coords/reset',function(req,res,next){
 	Coords.remove(function (err) {
 	  if(err) res.status(500).json(err);
 	  res.status(200).send('Remove all success !');
@@ -463,7 +460,7 @@ router.post('/coords/rm',function(req,res,next){
 	});
 });
 
-router.post('/friends',function(req,res,next){
+router.post('/friends/reset',function(req,res,next){
 	Friends.remove(function (err) {
 		if(err) res.status(500).json(err);
 	  	res.status(200).send('remove all success!');
