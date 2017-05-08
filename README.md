@@ -34,7 +34,7 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
 
 - express-jwt:
 
-## Routes
+## Routes route.js
 
 ### Basic Opérations without token
 
@@ -92,9 +92,56 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
     - 500:
       - JsonObject: error
 - POST /users/getcoords
-
+  - Description : Get all users and coords to show in the sidebar view use in reloadFriendsList
+                : If you are logged you have every user except you
+  - Body Param :
+    - Boolean: islog
+    - String: user_id
+  - Response :
+    - 200:
+      - JsonArray:
+        - JsonObject: user
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+        - JsonArray: info
+          - String: user_id
+          - String: lat
+          - String: lng
+          - String: date
+        - Boolean: isfriend
+    - 400:
+      - String: error (islog is required)
+    - 500:
+      - JsonObject: error
 - POST /users/onsearch
-
+  - Description : Get all users and coords that match with search to show in the sidebar view
+                : If you are logged you have every user that match except you
+  - Body Param :
+    - Boolean: islog
+    - String: search
+    - String: user_id
+  - Response :
+    - 200:
+      - JsonArray:
+        - JsonObject: user
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+        - JsonArray: info
+          - String: user_id
+          - String: lat
+          - String: lng
+          - String: date
+        - Boolean: isfriend
+    - 400:
+      - String: error (islog and search are required)
+    - 500:
+      - JsonObject: error
 ### Use of jwt.verify() methods to require an authentification token for all others routes
 
 - POST /users/logine
