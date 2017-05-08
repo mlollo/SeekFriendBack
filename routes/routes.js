@@ -244,6 +244,10 @@ router.delete('/users',function(req,res,next){
 
 
 router.delete('/users/rm',function(req,res,next){
+	if(!req.body.email){
+		res.status(400).send("email is required");
+		return;
+	}
 	Users.remove({email: req.body.email},function (err,users) {
 	  	if(err) res.status(500).send(err);
 	    console.log('remove '+ users +' success!');
@@ -259,36 +263,32 @@ router.delete('/coords',function(req,res,next){
 });
 
 router.delete('/coords/rm',function(req,res,next){
-	if(req.body.id != undefined){
-		Coords.remove({_id: req.body.id},function (err,coord) {
-		  if (err) 
-		  	res.send('rm error');
-		  else
-		  	res.send('remove '+ coord +' success!');
-		});
-	}else
-		res.send('Please add an id delete parameter!')
+	if(!req.body.id){
+		res.status(400).send("id is required");
+		return;
+	}
+	Coords.remove({_id: req.body.id},function (err,coord) {
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove '+ coord +' success!');
+	});
 });
 
 router.delete('/friends',function(req,res,next){
 	Friends.remove(function (err) {
-	  if (err) 
-	  	res.send('reset error');
-	  else
-	  	res.send('remove all success!');
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove all success!');
 	});
 });
 
 router.delete('/friends/rm',function(req,res,next){
-	if(req.body.id != undefined){
-		Friends.remove({_id: req.body.id},function (err,friends) {
-		  if (err) 
-		  	res.send('rm error');
-		  else
-		  	res.send('remove '+ friends +' success!');
-		});
-	}else
-		res.send('Please add an id delete parameter!')
+	if(!req.body.id){
+		res.status(400).send("id is required");
+		return;
+	}
+	Friends.remove({_id: req.body.id},function (err,friends) {
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove '+ friends +' success!');
+	});
 });
 
 
