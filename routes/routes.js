@@ -27,7 +27,7 @@ var Friends = mongoose.model('Friends', {
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
-	res.send('Users Route');
+	res.status(200).send('Users Route');
 });
 
 router.get('/users/getall', function(req, res, next) {
@@ -263,6 +263,7 @@ router.delete('/coords',function(req,res,next){
 });
 
 router.delete('/coords/rm',function(req,res,next){
+	console.log(req.body);
 	if(!req.body.id){
 		res.status(400).send("id is required");
 		return;
