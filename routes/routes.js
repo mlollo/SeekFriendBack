@@ -358,21 +358,6 @@ router.post('/users/isfriend',function(req,res,next){
 	});
 });
 
-router.post('/users/removeFriend',function(req,res,next){
-	Friends.remove({
-		$or:[
-			{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
-			{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
-			]
-		},function (err,friendship) {
-		  if (err) 
-		  	res.send('rm error');
-		  else
-		  	res.send('remove '+ friendship +' success!');
-		});
-});
-
-
 router.post('/users/logout', function(req, res, next) {
 	Users.findOneAndUpdate({'email' : req.body.email},{'isLog': false },function(err, user){
 		if(err) res.status(500).json(err);
@@ -441,6 +426,26 @@ router.delete('/users/rm',function(req,res,next){
 	    console.log('remove '+ users +' success!');
 		res.status(200).send('remove '+ users.pseudo +' success!');
 	});
+});
+
+router.delete('/users/removeFriend',function(req,res,next){
+	if(!req.body.friends1){
+		res.status(400).send("password is required");
+		return;
+	}
+	if(!req.body.friends2){
+		res.status(400).send("password is required");
+		return;
+	}
+	Friends.remove({
+		$or:[
+			{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
+			{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
+			]
+		},function (err,friendship) {
+	  		if(err) res.status(500).json(err);
+		  	res.status(200).send('remove '+ friendship +' success!');
+		});
 });
 
 router.delete('/coords',function(req,res,next){
