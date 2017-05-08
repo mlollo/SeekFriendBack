@@ -241,23 +241,139 @@
     - 500:
       - JsonObject: error
 - POST /users/logout
-
+  - Description : logout and update islog
+  - Body Param :
+    - String: email
+  - Response :
+    - 200:
+       - JsonObject:
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+    - 400:
+      - String: error (friends1 and friends2 are required)
+    - 500:
+      - JsonObject: error
 - POST /users/getbyemail
-
+  - Description : get a user that match with an email
+  - Body Param :
+    - String: email
+  - Response :
+    - 200:
+       - JsonObject:
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+    - 500:
+      - JsonObject: error
 - POST /users/getbyid
-
+  - Description : get a user that match with an id
+  - Body Param :
+    - String: user_id
+  - Response :
+    - 200:
+       - JsonObject:
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+    - 400:
+      - String: error (user_id are required)
+    - 500:
+      - JsonObject: error
 - PUT /users/pw
-
+  - Description : update the user password
+  - Module :
+    - bcrypt :  compare the old password with database password
+  - Body Param :
+    - String: password
+    - String: newpassword
+    - String: email
+  - Response :
+    - 200:
+       - JsonObject:
+          - Boolean: valid
+          - JsonObject: user
+            - String: email
+            - String: pseudo
+            - String: password
+            - Boolean: isLog
+            - String: token
+    - 400:
+      - String: error (password and newpassword are required)
+    - 401:
+      - JsonObject:
+        - Boolean: valid
+    - 500:
+      - JsonObject: error
 - POST /users/reset
-
+  - Description : delete all users not use in the app
+  - Response :
+    - 200:
+       - String: Success
+    - 500:
+      - JsonObject: error
 - POST /users/rm
-
+  - Description : delete one user not use in the app
+  - Body Param :
+    - String: email
+  - Response :
+    - 200:
+       - String: Success
+    - 400:
+      - String: error (email is required)
+    - 500:
+      - JsonObject: error
 - POST /users/removeFriend
-
+  - Description : delete a friendship by users id use in the sidebar view in the menu template
+  - Body Param :
+    - String: friends1
+    - String: friends2
+  - Response :
+    - 200:
+       - String: Success
+    - 400:
+      - String: error (friends1 and friends2 are required)
+    - 500:
+      - JsonObject: error
 - POST /coords/reset
-
+  - Description : delete all coords not use
+  - Response :
+    - 200:
+       - String: Success
+    - 500:
+      - JsonObject: error
 - POST /coords/rm
-
+  - Description : delete one coord by id use in profil view when deleting a position record
+  - Body Param :
+    - String: id
+  - Response :
+    - 200:
+       - String: Success
+    - 400:
+      - String: error (id is required)
+    - 500:
+      - JsonObject: error
 - POST /friends/reset
-
+  - Description : delete all friendships not use
+  - Response :
+    - 200:
+       - String: Success
+    - 500:
+      - JsonObject: error
 - POST /friends/rm
+  - Description : delete one friendship by id not use
+  - Body Param :
+    - String: id
+  - Response :
+    - 200:
+       - String: Success
+    - 400:
+      - String: error (id is required)
+    - 500:
+      - JsonObject: error
