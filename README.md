@@ -8,6 +8,10 @@
 
 - http
 
+## Port
+
+- 80
+
 ## Run
 
 ### Launch on windows (node prompt) the app with:
@@ -26,13 +30,14 @@
   - Description : Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir un serveur léger et rapide). 
 
 - mongoose :
-  - Use in every routes
+  - Description : Package qui permet de connecter le serveur à la base de données mongodb (connect dans app.js ligne 58) et permet de créer des models, enregistrer des entrées (save), rechercher des entrées (find), les modifier (findOneAndUpdate) et les supprimer (remove).
+  
 - bcrypt :
-
+  - Description : permet d'encrypter un mot de passe (hashSync) et de comparer un mot de passe avec celui encrypté et stocké dans mongodb (compareSync)
+  
 - jsonwebtoken :
-
-- express-jwt:
-
+  - Description : permet de créer un token à partir d'une passe phrase et d'un username dans notre cas un email et permet de verifier si le token donner en paramètre correspond à celui stocké dans la base.
+  
 ## Routes route.js
 
 ### Basic Operations without token
