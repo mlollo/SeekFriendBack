@@ -23,11 +23,10 @@
 ### Modules
 
 - expressjs :
-
-Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir un serveur léger et rapide). 
+  - Description : Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir un serveur léger et rapide). 
 
 - mongoose :
-
+  - Use in every routes
 - bcrypt :
 
 - jsonwebtoken :
@@ -36,7 +35,7 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
 
 ## Routes route.js
 
-### Basic Opérations without token
+### Basic Operations without token
 
 - GET /users/getall
   - Description : Get a json list of all users
@@ -68,7 +67,7 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
     - 500:
       - JsonObject: error
 - POST /users/login
-  - Description : Login a user to the database and retrieve the token
+  - Description : Login a user to the database (update of islog field) and retrieve the token
   - Module Use : 
     - bcrypt : to check if the password is correct
   - Body Param :
@@ -142,18 +141,105 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
       - String: error (islog and search are required)
     - 500:
       - JsonObject: error
-### Use of jwt.verify() methods to require an authentification token for all others routes
+### Use 
+- Use 
+  - Description : use of jwt.verify() methods to require an authentification token for all others routes
+  - Module :
+    - jwt : use of verify methods
+  - Body Param :
+    - String: token
+    - String: email
+  - Response :
+    - 400:
+      - String: error (email is required or wrong token)
+    - 401:
+      - String: error (token is required)
+    - 500:
+      - JsonObject: error 
+### Operation that require a token (email and token are required for all routes)
 
 - POST /users/logine
-
+  - Description : Login with a token when you choose remember me option (not working yet)
+  - Body Param :
+    - String: email
+  - Response :
+    - 200:
+      - JsonObject:
+        - Boolean: valid
+        - JsonObject: user
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+    - 500:
+      - JsonObject: error
 - POST /users/addcoords
-
+  - Description : Add a entry to the coords entity when a user is saving a position
+  - Body Param :
+    - String: user_id
+    - String: lat
+    - String: lng
+    - String: date 
+  - Response :
+    - 200:
+      - JsonObject:
+        - String: user_id
+        - String: lat
+        - String: lng
+        - String: date
+    - 500:
+      - JsonObject: error
 - POST /users/onsearchprofil
-
+  - Description : Get all coords or all coords that match with search to show in the sidebar profil view when you are logged in
+  - Body Param :
+    - String: email
+    - String: search
+    - String: user_id
+  - Response :
+    - 200:
+      - JsonArray:
+        - JsonObject: user
+          - String: email
+          - String: pseudo
+          - Boolean: isLog
+        - JsonArray: info
+          - String: user_id
+          - String: lat
+          - String: lng
+          - String: date
+    - 400:
+      - String: error (user_id and search are required)
+    - 500:
+      - JsonObject: error
 - POST /users/addfriend
-
+  - Description : add a friendship between two users
+  - Body Param :
+    - String: friends1
+    - String: friends2
+  - Response :
+    - 200:
+      - JsonObject:
+        - String: \_id
+        - String: friends1
+        - String: friends2
+    - 400:
+      - String: error (friends1 and friends2 are required)
+    - 500:
+      - JsonObject: error
 - POST /users/isfriend
-
+  - Description : check if two users are friend
+  - Body Param :
+    - String: friends1
+    - String: friends2
+  - Response :
+    - 200:
+      - JsonObject:
+        - String: isfriend
+    - 400:
+      - String: error (friends1 and friends2 are required)
+    - 500:
+      - JsonObject: error
 - POST /users/logout
 
 - POST /users/getbyemail
