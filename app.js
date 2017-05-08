@@ -1,4 +1,4 @@
-/*v0.0.4*/
+/*v0.1.0*/
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
