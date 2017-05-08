@@ -235,64 +235,6 @@ router.post('/users/onsearch', function(req, res, next) {
     });
 });
 
-router.delete('/users',function(req,res,next){
-	Users.remove(function (err) {
-	  if(err) res.status(500).json(err);
-	  res.status(200).send('Remove all success !');
-	});
-});
-
-
-router.delete('/users/rm',function(req,res,next){
-	if(!req.body.email){
-		res.status(400).send("email is required");
-		return;
-	}
-	Users.remove({email: req.body.email},function (err,users) {
-	  	if(err) res.status(500).send(err);
-	    console.log('remove '+ users +' success!');
-		res.status(200).send('remove '+ users.pseudo +' success!');
-	});
-});
-
-router.delete('/coords',function(req,res,next){
-	Coords.remove(function (err) {
-	  if(err) res.status(500).json(err);
-	  res.status(200).send('Remove all success !');
-	});
-});
-
-router.delete('/coords/rm',function(req,res,next){
-	console.log(req.params);
-	if(!req.body.id){
-		res.status(400).send("id is required");
-		return;
-	}
-	Coords.remove({_id: req.body.id},function (err,coord) {
-		if(err) res.status(500).json(err);
-	  	res.status(200).send('remove '+ coord +' success!');
-	});
-});
-
-router.delete('/friends',function(req,res,next){
-	Friends.remove(function (err) {
-		if(err) res.status(500).json(err);
-	  	res.status(200).send('remove all success!');
-	});
-});
-
-router.delete('/friends/rm',function(req,res,next){
-	if(!req.body.id){
-		res.status(400).send("id is required");
-		return;
-	}
-	Friends.remove({_id: req.body.id},function (err,friends) {
-		if(err) res.status(500).json(err);
-	  	res.status(200).send('remove '+ friends +' success!');
-	});
-});
-
-
 
 
 router.use(function(req, res, next){
@@ -477,6 +419,63 @@ router.put('/users/pw', function(req, res, next) {
 		}else{
 			res.status(401).json({valid:false});
 		}
+	});
+});
+
+
+router.post('/users',function(req,res,next){
+	Users.remove(function (err) {
+	  if(err) res.status(500).json(err);
+	  res.status(200).send('Remove all success !');
+	});
+});
+
+
+router.post('/users/rm',function(req,res,next){
+	if(!req.body.email){
+		res.status(400).send("email is required");
+		return;
+	}
+	Users.remove({email: req.body.email},function (err,users) {
+	  	if(err) res.status(500).send(err);
+	    console.log('remove '+ users +' success!');
+		res.status(200).send('remove '+ users.pseudo +' success!');
+	});
+});
+
+router.post('/coords',function(req,res,next){
+	Coords.remove(function (err) {
+	  if(err) res.status(500).json(err);
+	  res.status(200).send('Remove all success !');
+	});
+});
+
+router.post('/coords/rm',function(req,res,next){
+	if(!req.body.id){
+		res.status(400).send("id is required");
+		return;
+	}
+	Coords.remove({_id: req.body.id},function (err,coord) {
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove '+ coord +' success!');
+	});
+});
+
+router.post('/friends',function(req,res,next){
+	Friends.remove(function (err) {
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove all success!');
+	});
+});
+
+router.post('/friends/rm',function(req,res,next){
+	if(!req.body.id){
+		res.status(400).send("id is required");
+		return;
+	}
+	Friends.remove({_id: req.body.id},function (err,friends) {
+		if(err) res.status(500).json(err);
+	  	res.status(200).send('remove '+ friends +' success!');
 	});
 });
 
