@@ -1,5 +1,13 @@
 # Documentation API REST SeekFriendBack
 
+## Host
+
+- mlollo.rmoprheus.enseirb.fr
+
+## Protocol
+
+- http
+
 ## Run
 
 ### Launch on windows (node prompt) the app with:
@@ -29,9 +37,30 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
 ### Basic Opérations without token
 
 - GET /users/getall
-
+  - Body Param : None
+  - Response :
+    - 200:
+      - JsonObject :
+        - email
+        - pseudo
+        - isLog
+        - token
+    - 500:
+      - JsonObject : error
 - POST /users/add
-
+  - Body Param :
+    - email
+    - pseudo
+    - password
+  - Response :
+    - 200:
+      - JsonObject :
+        - email
+        - pseudo
+        - isLog
+        - token
+    - 500:
+      - JsonObject : error
 - POST /users/login
 
 - POST /users/getcoords
