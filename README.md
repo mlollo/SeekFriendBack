@@ -26,6 +26,8 @@
 
 Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir un serveur léger et rapide). 
 
+- mongoose :
+
 - bcrypt :
 
 - jsonwebtoken :
@@ -37,32 +39,58 @@ Pour notre API REST, nous avons utilisé le module expressjs (qui permet d'avoir
 ### Basic Opérations without token
 
 - GET /users/getall
+  - Description : Get a json list of all users
   - Body Param : None
   - Response :
     - 200:
-      - JsonObject :
-        - email
-        - pseudo
-        - isLog
-        - token
+      - JsonObject:
+        - String: email
+        - String: pseudo
+        - Boolean: isLog
+        - String: token
     - 500:
-      - JsonObject : error
+      - JsonObject: error
 - POST /users/add
+  - Description : Add a new user to the data base when a app do Register
+  - Module Use : 
+    - bcrypt : to encrypt the password
+    - jwt : to create a token for this email
   - Body Param :
-    - email
-    - pseudo
-    - password
+    - String: email
+    - String: pseudo
+    - String: password
   - Response :
     - 200:
-      - JsonObject :
-        - email
-        - pseudo
-        - isLog
-        - token
+      - JsonObject:
+        - Boolean: invalid
+    - 400:
+      - String: error (all body params are required)
     - 500:
-      - JsonObject : error
+      - JsonObject: error
 - POST /users/login
-
+  - Description : Login a user to the database and retrieve the token
+  - Module Use : 
+    - bcrypt : to check if the password is correct
+  - Body Param :
+    - String: email
+    - String: password
+  - Response :
+    - 200:
+      - JsonObject:
+        - Boolean: valid
+        - JsonObject: user
+          - String: email
+          - String: pseudo
+          - String: password
+          - Boolean: isLog
+          - String: token
+    - 400:
+      - String: error (all body params are required)
+    - 401:
+      - JsonObject:
+        - Boolean: valid
+    - 500:
+      - JsonObject: error
 - POST /users/getcoords
 
 - POST /users/onsearch
