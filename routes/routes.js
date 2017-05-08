@@ -263,7 +263,7 @@ router.delete('/coords',function(req,res,next){
 });
 
 router.delete('/coords/rm',function(req,res,next){
-	console.log(req);
+	console.log(req.params);
 	if(!req.body.id){
 		res.status(400).send("id is required");
 		return;
