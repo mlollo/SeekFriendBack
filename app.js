@@ -3,9 +3,9 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var unless = require('express-unless');
 var mongoose = require('./node_modules/mongoose');
 //Middleware: Allows cross-domain requests (CORS)
 var allowCrossDomain = function(req, res, next) {
@@ -34,8 +34,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(allowCrossDomain);
 
-app.use('/', index);
-app.use('/users', routes);
+app.use(cors());
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
