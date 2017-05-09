@@ -38,6 +38,23 @@
 - jsonwebtoken :
   - Description : permet de créer un token à partir d'une phrase servant de mot de passe et d'un username (dans notre cas un email) et permet de verifier si le token donné en paramètre correspond à celui stocké dans la base. Cela permet l'authentification des requêtes des users.
   
+### Model
+
+- Users :
+  - String: email
+  - String: pseudo
+  - String: password
+  - Boolean: isLog
+  - String: token
+- Coords :
+  - String: user_id
+  - String: lat
+  - String: lng
+  - String: date
+- Friends :
+  - String: friends1
+  - String: friends2
+  
 ## Routes route.js
 
 ### Basic Operations without token
