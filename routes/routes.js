@@ -32,31 +32,6 @@ var Admin = mongoose.model('Admin', {
 
 /* GET users listing. */
 
-router.post('/admin/add',function(req,res,next){
-	if(!req.body.name){
-		res.status(400).send("name is required");
-		return;
-	}
-	Admin.find({'name' : req.body.name},function(err, admin){
-		if(err) res.status(500).json(err);
-		if(admin.length === 0){
-			var aadmin = new Admin({ 
-				name: req.body.name,
-				token: jwt.sign({username: req.body.name},'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§')
-			});
-			aadmin.save(function (err) {
-				if(err) res.status(500).json(err);
-				console.log('[adminObject = \n'+aadmin+'] \nsaved!');
-				res.status(200).json(aadmin);
-			});
-		}else{
-			res.status(200).json("error");
-		}
-	});
-	
-});
-
-
 router.post('/users/add',function(req,res,next){
 	if(!req.body.email || !req.body.pseudo || !req.body.password){
 		res.status(400).send("email, pseudo and password is required");
@@ -467,6 +442,31 @@ router.use(function(req, res, next){
 		});
 	});
 });
+
+router.post('/admin/add',function(req,res,next){
+	if(!req.body.name){
+		res.status(400).send("name is required");
+		return;
+	}
+	Admin.find({'name' : req.body.name},function(err, admin){
+		if(err) res.status(500).json(err);
+		if(admin.length === 0){
+			var aadmin = new Admin({ 
+				name: req.body.name,
+				token: jwt.sign({username: req.body.name},'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§')
+			});
+			aadmin.save(function (err) {
+				if(err) res.status(500).json(err);
+				console.log('[adminObject = \n'+aadmin+'] \nsaved!');
+				res.status(200).json(aadmin);
+			});
+		}else{
+			res.status(200).json("error");
+		}
+	});
+	
+});
+
 
 
 router.get('/users/getall', function(req, res, next) {
