@@ -227,19 +227,23 @@ router.use(function(req, res, next){
 	}else{
 		var token = req.body.token;
 	}
-	if(!req.body.email){
-		res.status(400).send("email is required");
-		return;
-	}else{
-		var email = req.body.email;
-	}
-	Users.findOne({"email": email},function(err,user){
-		jwt.verify(token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
-			if(err) res.status(400).send("wrong token");
-			//console.log(decoded);
-			next();
+	if(!req.body.name){
+		if(!req.body.email){
+			res.status(400).send("email is required");
+			return;
+		}else{
+			var email = req.body.email;
+		}
+		Users.findOne({"email": email},function(err,user){
+			jwt.verify(token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
+				if(err) res.status(400).send("wrong token");
+				//console.log(decoded);
+				next();
+			});
 		});
-	});
+	}else{
+		next().next().next().next().next().next().next().next().next().next().next().next();
+	}
 });
 
 router.post('/users/logine', function(req, res, next) {
