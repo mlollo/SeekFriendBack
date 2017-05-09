@@ -445,7 +445,7 @@ router.post('/coords/rm',function(req,res,next){
 
 router.use(function(req, res, next){
 	Admin.findOne({"name": "./§seekfriendlamartilollosefi./§"},function(err,user){
-		jwt.verify(token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
+		jwt.verify(req.body.token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
 			if(err) res.status(400).send("wrong token");
 			//console.log(decoded);
 			next();
