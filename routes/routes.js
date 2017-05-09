@@ -117,20 +117,33 @@ router.post('/users/getcoords', function(req, res, next) {
 			}
 			if(req.body.islog == true){
 				if(req.body.user_id != value._id){
-					userlist.push({
-						user: {
-							user_id: value._id,
-							email: value.email,
-							pseudo: value.pseudo,
-							isLog: value.isLog
-						},
-						info: infoc,
-						isfriend: isFriend
-					});
+					if(isFriend){
+						userlist.push({
+							user: {
+								user_id: value._id,
+								email: value.email,
+								pseudo: value.pseudo,
+								isLog: value.isLog
+							},
+							info: infoc,
+							isfriend: isFriend
+						});
+					}else{
+						userlist.push({
+							user: {
+								user_id: value._id,
+								pseudo: value.pseudo,
+								isLog: value.isLog
+							},
+							info: [],
+							isfriend: isFriend
+						});
+					}
 				}
 			}else{
 				userlist.push({
 					user: {
+						user_id: value._id,
 						pseudo: value.pseudo,
 						isLog: value.isLog
 					},
@@ -189,20 +202,33 @@ router.post('/users/onsearch', function(req, res, next) {
 			}
 			if(req.body.islog == true){
 				if(req.body.user_id != value._id){
-					userlist.push({
-						user: {
-							user_id: value._id,
-							email: value.email,
-							pseudo: value.pseudo,
-							isLog: value.isLog
-						},
-						info: infoc,
-						isfriend: isFriend
-					});
+					if(isFriend){
+						userlist.push({
+							user: {
+								user_id: value._id,
+								email: value.email,
+								pseudo: value.pseudo,
+								isLog: value.isLog
+							},
+							info: infoc,
+							isfriend: isFriend
+						});
+					}else{
+						userlist.push({
+							user: {
+								user_id: value._id,
+								pseudo: value.pseudo,
+								isLog: value.isLog
+							},
+							info: [],
+							isfriend: isFriend
+						});
+					}
 				}
 			}else{
 				userlist.push({
 					user: {
+						user_id: value._id,
 						pseudo: value.pseudo,
 						isLog: value.isLog
 					},
@@ -305,7 +331,7 @@ router.post('/users/onsearchprofil', function(req, res, next) {
 			});
 		}   
 	}).then(function(result){
-		res.status(200).json({'user': result[0], 'info': result[1]});
+		res.status(200).json({'user': {_id: result[0]._id, email: result[0].email, pseudo: result[0].pseudo}, 'info': result[1]});
 	}).then(undefined, function(err){
 		if(err) res.status(500).json(err);
 	});
