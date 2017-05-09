@@ -25,19 +25,37 @@ var Friends = mongoose.model('Friends', {
 	friends2: String
 });
 
+var Admin = mongoose.model('Admin', { 
+	name: String,
+	token: String
+});
+
 /* GET users listing. */
 
-router.get('/users/getall', function(req, res, next) {
-	Users.find(function(err, users){
+router.post('/admin/add',function(req,res,next){
+	if(!req.body.name){
+		res.status(400).send("name is required");
+		return;
+	}
+	Admin.find({'name' : req.body.name},function(err, admin){
 		if(err) res.status(500).json(err);
-		var jsonArr = [];
-		users.forEach(function(value,key){
-			console.log(value);
-			jsonArr.push({email:value.email,pseudo:value.pseudo,isLog:value.isLog,token: value.token});
-		});
-		res.status(200).json(jsonArr);
+		if(admin.length === 0){
+			var aadmin = new Admin({ 
+				name: req.body.name,
+				token: jwt.sign({username: req.body.name},'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§')
+			});
+			aadmin.save(function (err) {
+				if(err) res.status(500).json(err);
+				console.log('[adminObject = \n'+aadmin+'] \nsaved!');
+				res.status(200).json(aadmin);
+			});
+		}else{
+			res.status(200).json("error");
+		}
 	});
+	
 });
+
 
 router.post('/users/add',function(req,res,next){
 	if(!req.body.email || !req.body.pseudo || !req.body.password){
@@ -138,12 +156,10 @@ router.post('/users/getcoords', function(req, res, next) {
 			}else{
 				userlist.push({
 					user: {
-						user_id: value._id,
-						email: value.email,
 						pseudo: value.pseudo,
 						isLog: value.isLog
 					},
-					info: infoc,
+					info: [],
 					isfriend: isFriend
 				});
 			}
@@ -212,12 +228,10 @@ router.post('/users/onsearch', function(req, res, next) {
 			}else{
 				userlist.push({
 					user: {
-						user_id: value._id,
-						email: value.email,
 						pseudo: value.pseudo,
 						isLog: value.isLog
 					},
-					info: infoc,
+					info: [],
 					isfriend: isFriend
 				});
 			}
@@ -410,6 +424,63 @@ router.put('/users/pw', function(req, res, next) {
 	});
 });
 
+router.post('/users/removeFriend',function(req,res,next){
+	if(!req.body.friends1){
+		res.status(400).send("friends1 is required");
+		return;
+	}
+	if(!req.body.friends2){
+		res.status(400).send("friends2 is required");
+		return;
+	}
+	Friends.remove({
+		$or:[
+		{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
+		{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
+		]
+	},function (err,friendship) {
+		if(err) res.status(500).json(err);
+		res.status(200).send('remove '+ friendship +' success!');
+	});
+});
+
+
+router.post('/coords/rm',function(req,res,next){
+	if(!req.body.id){
+		res.status(400).send("id is required");
+		return;
+	}
+	Coords.remove({_id: req.body.id},function (err,coord) {
+		if(err) res.status(500).json(err);
+		res.status(200).send('remove '+ coord +' success!');
+	});
+});
+
+
+
+router.use(function(req, res, next){
+	Admin.findOne({"name": "./§seekfriendlamartilollosefi./§"},function(err,user){
+		jwt.verify(token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
+			if(err) res.status(400).send("wrong token");
+			//console.log(decoded);
+			next();
+		});
+	});
+});
+
+
+router.get('/users/getall', function(req, res, next) {
+	Users.find(function(err, users){
+		if(err) res.status(500).json(err);
+		var jsonArr = [];
+		users.forEach(function(value,key){
+			console.log(value);
+			jsonArr.push({email:value.email,pseudo:value.pseudo,isLog:value.isLog});
+		});
+		res.status(200).json(jsonArr);
+	});
+});
+
 
 router.post('/users/reset',function(req,res,next){
 	Users.remove(function (err) {
@@ -431,41 +502,10 @@ router.post('/users/rm',function(req,res,next){
 	});
 });
 
-router.post('/users/removeFriend',function(req,res,next){
-	if(!req.body.friends1){
-		res.status(400).send("friends1 is required");
-		return;
-	}
-	if(!req.body.friends2){
-		res.status(400).send("friends2 is required");
-		return;
-	}
-	Friends.remove({
-		$or:[
-		{$and: [{'friends1' : req.body.friends1}, {'friends2' : req.body.friends2} ]},
-		{$and: [{'friends1' : req.body.friends2}, {'friends2' : req.body.friends1} ]},
-		]
-	},function (err,friendship) {
-		if(err) res.status(500).json(err);
-		res.status(200).send('remove '+ friendship +' success!');
-	});
-});
-
 router.post('/coords/reset',function(req,res,next){
 	Coords.remove(function (err) {
 		if(err) res.status(500).json(err);
 		res.status(200).send('Remove all success !');
-	});
-});
-
-router.post('/coords/rm',function(req,res,next){
-	if(!req.body.id){
-		res.status(400).send("id is required");
-		return;
-	}
-	Coords.remove({_id: req.body.id},function (err,coord) {
-		if(err) res.status(500).json(err);
-		res.status(200).send('remove '+ coord +' success!');
 	});
 });
 
