@@ -242,7 +242,7 @@ router.use(function(req, res, next){
 			});
 		});
 	}else{
-		Admin.findOne({"name": "./§seekfriendlamartilollosefi./§"},function(err,user){
+		Admin.findOne({"name": req.body.name},function(err,user){
 			jwt.verify(token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
 				if(err) res.status(400).send("wrong token");
 				//console.log(decoded);
@@ -444,7 +444,7 @@ router.post('/coords/rm',function(req,res,next){
 
 
 router.use(function(req, res, next){
-	Admin.findOne({"name": "./§seekfriendlamartilollosefi./§"},function(err,user){
+	Admin.findOne({"name": req.body.name},function(err,user){
 		jwt.verify(req.body.token,'./§seekfriendlamartilollosefi./§ ./§secret./§ ./§0987654321./§',function(err,decoded){
 			if(err) res.status(400).send("wrong token");
 			//console.log(decoded);
@@ -478,8 +478,7 @@ router.post('/admin/add',function(req,res,next){
 });
 
 
-
-router.get('/users/getall', function(req, res, next) {
+router.post('/users/getall', function(req, res, next) {
 	Users.find(function(err, users){
 		if(err) res.status(500).json(err);
 		var jsonArr = [];
