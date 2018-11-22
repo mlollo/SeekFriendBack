@@ -55,6 +55,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-mongoose.connect('mongodb://' + process.env.mongodb_ip || 'localhost' + '/SeekFriend');
+mongoose.connect('mongodb://' + process.env.mongodb_ip + '/SeekFriend');
 
 module.exports = app;

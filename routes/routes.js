@@ -1,5 +1,5 @@
 var express = require('express');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var expressJWT = require('express-jwt');

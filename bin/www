@@ -4,6 +4,12 @@
  * Module dependencies.
  */
 
+var arg1 = (process.argv[2] || 'port=8080').split('=');
+var arg2 = (process.argv[3] || 'mongodb_ip=localhost').split('=');
+process.env[arg1[0]] = arg1[1];
+process.env[arg2[0]] = arg2[1];
+process.env["DEBUG"] = "seekfriendback:*";
+
 var app = require('../app');
 var debug = require('debug')('seekfriendback:server');
 var http = require('http');
@@ -12,7 +18,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.port || '8080');
+var port = normalizePort(process.env.port);
 app.set('port', port);
 
 /**
