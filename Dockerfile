@@ -6,5 +6,5 @@ WORKDIR /usr/src/app
 COPY . .
 RUN npm update && npm install
 EXPOSE 8080
-ENTRYPOINT ["npm", "start" ]
-CMD ["--", "port=8080", "mongodb_ip=localhost"]
+ENTRYPOINT ["npm", "start", "--" ]
+CMD ["port=8080", "mongodb_ip=localhost"]
